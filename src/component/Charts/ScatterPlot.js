@@ -22,8 +22,8 @@ const ScatterPlot = ({ data }) => {
 
     return (
         <div>
-            <h2>House Price vs. Number of Bedrooms</h2>
-            <div style={{ height: '400px', width: '100%' }}>
+            <h2 style={{ textAlign: 'center', paddingTop: 30 }}>House Price vs. Number of Bedrooms</h2>
+            <div style={{ height: '400px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 60 }}>
                 <Scatter data={scatterConfig} />
             </div>
         </div>

@@ -10,6 +10,12 @@ const CityBarChartComponent = (props) => {
 
     const options = {
         scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'City',
+                },
+            },
             y: {
                 beginAtZero: true,
                 title: {
@@ -22,7 +28,7 @@ const CityBarChartComponent = (props) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', paddingBottom: 0, marginTop: 0, marginRight: 0 }}>
-            <h2 style={{ textAlign: 'center' }}>House Prices and Median Family Incomes by City</h2>
+            <h2 style={{ textAlign: 'center' }}>House Prices and Median Family Incomes of {props?.selectedCity && props?.selectedCity.value}</h2>
             <Bar options={options} data={props.data} />
         </div>
 

@@ -9,7 +9,7 @@ const BarAllcityPlot = ({ data }) => {
             {
                 label: 'House Price',
                 data: data.map(city => city.Price),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color for the bars
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Color for the bars
             },
             {
                 label: 'Median Family Income',
@@ -26,13 +26,13 @@ const BarAllcityPlot = ({ data }) => {
                 beginAtZero: true,
                 title: {
                     display: true,
-                    text: 'Value',
+                    text: 'House Price (CAD)',
                 },
             },
             x: {
                 title: {
                     display: true,
-                    text: 'City',
+                    text: 'Top City',
                 },
             },
         },
@@ -40,7 +40,7 @@ const BarAllcityPlot = ({ data }) => {
 
     return (
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingBottom: 20, marginTop: 20 }}>
-            <h2 style={{ textAlign: 'center' }}>House Prices and Median Family Incomes by City</h2>
+            <h2 style={{ textAlign: 'center' }}>House Prices and Median Family Incomes for all Top Cities</h2>
 
             <Bar data={barData} options={barOptions} />
 

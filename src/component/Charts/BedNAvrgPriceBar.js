@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-const BedNAvrgPriceBar = ({ data }) => {
+const BedNAvrgPriceBar = ({ data, selectedCity }) => {
     // Group data by number of bedrooms and calculate average house price for each group
     const groupedData = {};
     data.forEach(property => {
@@ -28,7 +28,10 @@ const BedNAvrgPriceBar = ({ data }) => {
             {
                 label: 'Average House Price',
                 data: averagePrices.map(entry => entry.averagePrice), // Average house price
-                backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color for the bars
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)', // Color for the first bar 
+                    // Add more colors as needed
+                ],
                 borderWidth: 1,
             },
         ],
@@ -55,8 +58,8 @@ const BedNAvrgPriceBar = ({ data }) => {
 
     return (
         <div>
-            <h2 style={{ textAlign: 'center' }}>Average House Price by Number of Bedrooms</h2>
-            <div style={{ height: '300px', width: '100%' }}>
+            <h3 style={{ textAlign: 'center' }}>Average House Price of {selectedCity && selectedCity.value} by Number of Bedrooms</h3>
+            <div style={{ height: '300px', width: '100%', marginLeft: 30 }}>
                 <Bar data={barData} options={barOptions} />
             </div>
         </div>
