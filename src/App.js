@@ -22,6 +22,7 @@ function App() {
   const [averagePrices, setAveragePrices] = useState(null)
   const [cityStatistic, setCityStatistic] = useState(null)
   const [cities, setCities] = useState([cityData]);
+  const [citiesInfo, setCitiesInfo] = useState([canadaHousePrice]);
   const [citychartData, setCityChartData] = useState(null);
   const [selectedCity, setSelectedCity] = useState({
     value: "Edmonton",
@@ -31,54 +32,48 @@ function App() {
 
   useEffect(() => {
     // console.log("cityData", cityData);
-    // console.log("canadaHousePrice", canadaHousePrice);
-
-
-    // const url = "https://github.com/MahmudHasanMenon/canada-house-price-API-server/blob/main/db.json"
-    // fetch(
-    //   url
-    //   // "https://data.edmonton.ca/resource/s4ws-tdws.json?$limit=1000"
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('data', data)
-    //     // const albertaData = data.filter((item, index) => item.station_province === "ALBERTA")
-    //     // console.log('albertaData', data)
-    //     // setCanadaWeatherData(data)
-    //   });
-
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch(url, {
-    //       mode: 'no-cors',
-    //     });
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     const jsonData = await response.json();
-    //     console.log('jsonData', jsonData)
-    //     // setData(jsonData);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
-
+    // console.log("canadaHousePrice", canadaHousePrice)
     fetchData();
   }, []);
 
   const fetchData = () => {
-    const cityFilterData = canadaHousePrice.filter(
+    const url = "https://apigenerator.dronahq.com/api/6SmkZiQG/caCityInfo"
+    fetch(url)
+      .then((response) => {
+        if (response) {
+          const data = response.json();
+          if (data && data.length > 0) {
+            setCitiesInfo(data)
+            getCitiesInfo(data)
+          }
+          else {
+            setCitiesInfo(canadaHousePrice)
+            getCitiesInfo(canadaHousePrice)
+          }
+
+        }
+        else {
+          setCitiesInfo(canadaHousePrice)
+          getCitiesInfo(canadaHousePrice)
+        }
+
+      }
+      )
+  }
+
+  const getCitiesInfo = (data) => {
+    const cityFilterData = data.filter(
       (item, index) => item.City === "Edmonton"
     );
     setCityHousePriceData(cityFilterData);
     prepareAllCitiesAvrgPrice()
-    setCityStatistic(calculateCityStatistics(canadaHousePrice, 'Edmonton'))
+    setCityStatistic(calculateCityStatistics(data, 'Edmonton'))
     prepareCityStatistic('Edmonton')
   }
 
   const prepareCityStatistic = (selectedCity) => {
-    if (canadaHousePrice && selectedCity) {
-      const selectedCityData = canadaHousePrice.filter(location => location.City === selectedCity);
+    if (citiesInfo && selectedCity) {
+      const selectedCityData = citiesInfo.filter(location => location.City === selectedCity);
 
       const locations = selectedCityData.map(location => location.Address);
       const housePrices = selectedCityData.map(location => location.Price);
@@ -108,7 +103,7 @@ function App() {
 
   const prepareAllCitiesAvrgPrice = () => {
     if (cityData && cityData.length > 0) {
-      const averagePrices = getAllCityAvrgPriceDatasets(canadaHousePrice)
+      const averagePrices = getAllCityAvrgPriceDatasets(citiesInfo)
       setAveragePrices(averagePrices)
     }
   }
@@ -116,11 +111,11 @@ function App() {
   const setCity = (item) => {
     if (item && item.value) {
       setSelectedCity(item)
-      const cityFilterData = canadaHousePrice.filter(
+      const cityFilterData = citiesInfo.filter(
         (data, index) => data.City === item.value
       );
       setCityHousePriceData(cityFilterData);
-      setCityStatistic(calculateCityStatistics(canadaHousePrice, item.value))
+      setCityStatistic(calculateCityStatistics(citiesInfo, item.value))
       prepareCityStatistic(item.value)
     }
   }
@@ -128,7 +123,7 @@ function App() {
   const handleChange = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchInput(query);
-    const cityFilterData = canadaHousePrice.filter(city =>
+    const cityFilterData = citiesInfo.filter(city =>
       city.City.toLowerCase().includes(query)
     );
 
@@ -136,7 +131,7 @@ function App() {
     let findCity = cityData.find(city => city.value.toLowerCase().includes(query))
     if (findCity) {
       setSelectedCity(findCity)
-      setCityStatistic(calculateCityStatistics(canadaHousePrice, findCity.value))
+      setCityStatistic(calculateCityStatistics(citiesInfo, findCity.value))
       prepareCityStatistic(findCity.value)
     }
 
@@ -147,7 +142,7 @@ function App() {
 
   const handleSearchButton = () => {
     if (searchInput) {
-      const cityFilterData = canadaHousePrice.filter(city =>
+      const cityFilterData = citiesInfo.filter(city =>
         city.City.toLowerCase().includes(searchInput)
       );
 
@@ -156,7 +151,7 @@ function App() {
 
       if (findCity) {
         setSelectedCity(findCity)
-        setCityStatistic(calculateCityStatistics(canadaHousePrice, findCity.value))
+        setCityStatistic(calculateCityStatistics(citiesInfo, findCity.value))
         prepareCityStatistic(findCity.value)
       }
     }
@@ -174,7 +169,7 @@ function App() {
             alt="c-tribe"
           />
         </div>
-        <div class="search-container" style={{ display: 'flex', flexDirection: 'row', background: "#FFFFFF", flex: 0.8, borderRadius: 10, alignItems: 'center', marginRight: 100, paddingLeft: 20 }}>
+        <div className="search-container" style={{ display: 'flex', flexDirection: 'row', background: "#FFFFFF", flex: 0.8, borderRadius: 10, alignItems: 'center', marginRight: 100, paddingLeft: 20 }}>
           <button onClick={() => handleSearchButton()} type="submit"><i class="fa fa-search"></i></button>
           <input
             style={{
@@ -303,12 +298,12 @@ function App() {
               </div> : null
           }
           <div className="allCityContainer">
-            <BarAllcityPlot data={canadaHousePrice} />
+            <BarAllcityPlot data={citiesInfo} />
           </div>
         </div>
 
         {/* <div style={{ backgroundColor: 'white', marginTop: 40, marginLeft: 40, marginRight: 40, borderRadius: 20, }}>
-          <ScatterPlot data={canadaHousePrice} />
+          <ScatterPlot data={citiesInfo} />
         </div> */}
 
       </div>
