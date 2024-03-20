@@ -1,7 +1,6 @@
 export function getAllCityAvrgPriceDatasets(allCityData) {
     const averagePrices = {};
     const cityCount = {};
-    console.log('allCityData', allCityData)
     allCityData.forEach(city => {
         const cityName = city.City;
         const price = city.Price;
@@ -20,10 +19,6 @@ export function getAllCityAvrgPriceDatasets(allCityData) {
     topCities.forEach(city => {
         averagePrices[city] /= cityCount[city];
     });
-
-
-    console.log('topCities', topCities)
-    console.log('averagePrices', averagePrices)
     // Sort cities by average price in descending order
     const sortedCities = topCities.sort((a, b) => averagePrices[b] - averagePrices[a]);
 

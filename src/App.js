@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Select from "react-select";
-import DoughnutComponent from "./component/Charts/Doughnut";
 import BarChartComponent from "./component/Charts/BarComponent";
 import CityBarChartComponent from "./component/Charts/CityPriceIncomeBarComponent";
 import PieChartComponent from "./component/Charts/PieComponent";
@@ -12,7 +11,6 @@ import BedNAvrgPriceBar from "./component/Charts/BedNAvrgPriceBar";
 import ScatterAllCityPlot from "./component/Charts/ScatterAllCity";
 import BarAllcityPlot from "./component/Charts/BarAllcityPlot";
 import LineAllCityPlot from "./component/Charts/LineAllCityPlot";
-import HeatmapChart from "./component/Charts/Heatmap";
 import MapComponent from "./component/StreetMap/Map";
 import { canadaHousePrice } from "../src/utils/caCityHouse";
 import { cityData } from "../src/utils/cityData";
@@ -36,7 +34,7 @@ function App() {
     // console.log("canadaHousePrice", canadaHousePrice);
 
 
-    const url = "https://github.com/MahmudHasanMenon/canada-house-price-API-server/blob/main/db.json"
+    // const url = "https://github.com/MahmudHasanMenon/canada-house-price-API-server/blob/main/db.json"
     // fetch(
     //   url
     //   // "https://data.edmonton.ca/resource/s4ws-tdws.json?$limit=1000"
@@ -81,7 +79,7 @@ function App() {
   const prepareCityStatistic = (selectedCity) => {
     if (canadaHousePrice && selectedCity) {
       const selectedCityData = canadaHousePrice.filter(location => location.City === selectedCity);
-      console.log('selectedCityData', selectedCityData)
+
       const locations = selectedCityData.map(location => location.Address);
       const housePrices = selectedCityData.map(location => location.Price);
       const medianFamilyIncomes = selectedCityData.map(location => location.Median_Family_Income);
@@ -111,19 +109,16 @@ function App() {
   const prepareAllCitiesAvrgPrice = () => {
     if (cityData && cityData.length > 0) {
       const averagePrices = getAllCityAvrgPriceDatasets(canadaHousePrice)
-      console.log('topCitiesPriceDataset', averagePrices)
       setAveragePrices(averagePrices)
     }
   }
 
   const setCity = (item) => {
-    console.log('item', item)
     if (item && item.value) {
       setSelectedCity(item)
       const cityFilterData = canadaHousePrice.filter(
         (data, index) => data.City === item.value
       );
-      console.log('cityFilterData', cityFilterData)
       setCityHousePriceData(cityFilterData);
       setCityStatistic(calculateCityStatistics(canadaHousePrice, item.value))
       prepareCityStatistic(item.value)
@@ -133,6 +128,17 @@ function App() {
   const handleChange = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchInput(query);
+    const cityFilterData = canadaHousePrice.filter(city =>
+      city.City.toLowerCase().includes(query)
+    );
+
+    setCityHousePriceData(cityFilterData);
+    let findCity = cityData.find(city => city.value.toLowerCase().includes(query))
+    if (findCity) {
+      setSelectedCity(findCity)
+      setCityStatistic(calculateCityStatistics(canadaHousePrice, findCity.value))
+      prepareCityStatistic(findCity.value)
+    }
 
 
     // const filtered = citiesData.filter(city => city.name.toLowerCase().includes(query));
@@ -147,7 +153,7 @@ function App() {
 
       setCityHousePriceData(cityFilterData);
       let findCity = cityData.find(city => city.value.toLowerCase().includes(searchInput))
-      console.log('cityName', findCity)
+
       if (findCity) {
         setSelectedCity(findCity)
         setCityStatistic(calculateCityStatistics(canadaHousePrice, findCity.value))
@@ -158,9 +164,6 @@ function App() {
 
   return (
     <div className="body">
-      {/* <div className="navbar">
-        <h5 className="headerText">Canadian house prices for top cities</h5>
-      </div> */}
 
       <div className="searchBarContainer">
         <div style={{ display: 'flex', flex: 0.5, alignItems: 'center' }}>
