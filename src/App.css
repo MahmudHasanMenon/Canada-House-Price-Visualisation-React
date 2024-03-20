@@ -46,6 +46,18 @@
   background: linear-gradient(to top, #FBF2F9, #FBF2F9, #FBF2F9);
 }
 
+.navbar {
+  /* overflow: hidden; */
+  /* position: fixed; */
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(75, 192, 192, 0.6);
+  color: white;
+  padding: 10px 20px;
+}
+
 .header {
   display: flex;
   justify-content: start;
@@ -58,14 +70,14 @@
 }
 
 .headerText {
-  background: linear-gradient(to top, #FBF2F9, #FBF2F9, #FBF2F9);
+  /* background: linear-gradient(to top, #FBF2F9, #FBF2F9, #FBF2F9); */
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 0px;
   padding-top: 30px;
-  background-color: black;
+  /* background-color: black; */
 }
 
 .searchBarContainer {

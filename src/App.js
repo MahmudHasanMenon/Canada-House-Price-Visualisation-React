@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Select from "react-select";
-import DoughnutComponent from "../src/Charts/Doughnut";
-import BarChartComponent from "../src/Charts/BarComponent";
-import CityBarChartComponent from "../src/Charts/CityPriceIncomeBarComponent";
-import PieChartComponent from "../src/Charts/PieComponent";
-import LineChartComponent from "../src/Charts/LineComponent";
-import ScatterPlot from "../src/Charts/ScatterPlot";
-import BedNAvrgPriceBar from "../src/Charts/BedNAvrgPriceBar";
-import ScatterAllCityPlot from "../src/Charts/ScatterAllCity";
-import BarAllcityPlot from "../src/Charts/BarAllcityPlot";
-import LineAllCityPlot from "../src/Charts/LineAllCityPlot";
-import HeatmapChart from "../src/Charts/Heatmap";
-import MapComponent from "../src/Charts/Map";
-import { canadaHousePrice } from "./caCityHouse";
+import DoughnutComponent from "./component/Charts/Doughnut";
+import BarChartComponent from "./component/Charts/BarComponent";
+import CityBarChartComponent from "./component/Charts/CityPriceIncomeBarComponent";
+import PieChartComponent from "./component/Charts/PieComponent";
+import LineChartComponent from "./component/Charts/LineComponent";
+import ScatterPlot from "./component/Charts/ScatterPlot";
+import BedNAvrgPriceBar from "./component/Charts/BedNAvrgPriceBar";
+import ScatterAllCityPlot from "./component/Charts/ScatterAllCity";
+import BarAllcityPlot from "./component/Charts/BarAllcityPlot";
+import LineAllCityPlot from "./component/Charts/LineAllCityPlot";
+import HeatmapChart from "./component/Charts/Heatmap";
+import MapComponent from "./component/Charts/Map";
+import { canadaHousePrice } from "../src/utils/caCityHouse";
 import { cityData } from "../src/utils/cityData";
 import { getAllCityAvrgPriceDatasets, calculateCityStatistics } from "../src/utils/plotHelperFunction"
 
@@ -128,7 +128,10 @@ function App() {
 
   return (
     <div className="body">
-      <h1 className="headerText">Canadian house prices for top cities</h1>
+      <div className="navbar">
+        <h1 className="headerText">Canadian house prices for top cities</h1>
+      </div>
+
       <div className="searchBarContainer">
         <div style={{ display: 'flex', flex: 0.5 }}></div>
         <div class="search-container" style={{ display: 'flex', flexDirection: 'row', background: "#FFFFFF", flex: 0.8, borderRadius: 10, alignItems: 'center', marginRight: 100, paddingLeft: 20 }}>
