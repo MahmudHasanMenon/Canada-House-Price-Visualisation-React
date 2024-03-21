@@ -183,7 +183,7 @@ function App() {
             className="search"
             key="search-bar"
             value={searchInput}
-            placeholder={"search by city e.g Edmonton, Toronto, Calgary, Vancouber"}
+            placeholder={"Search by city e.g Edmonton, Toronto, Calgary, Vancouver"}
             onChange={handleChange}
           />
         </div>

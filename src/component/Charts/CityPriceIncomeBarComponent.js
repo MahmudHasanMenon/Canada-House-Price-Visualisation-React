@@ -13,7 +13,7 @@ const CityBarChartComponent = (props) => {
             x: {
                 title: {
                     display: true,
-                    text: 'City',
+                    text: 'Street Address',
                 },
             },
             y: {

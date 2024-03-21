@@ -33,7 +33,7 @@ const BarChartComponent = (props) => {
       x: {
         title: {
           display: true,
-          text: 'Top City',
+          text: 'Top Cities',
         },
       },
     },
