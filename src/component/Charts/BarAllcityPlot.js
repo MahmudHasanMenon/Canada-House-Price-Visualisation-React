@@ -32,7 +32,7 @@ const BarAllcityPlot = ({ data }) => {
             x: {
                 title: {
                     display: true,
-                    text: 'Top City',
+                    text: 'Top Cities',
                 },
             },
         },
