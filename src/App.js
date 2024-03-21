@@ -66,14 +66,14 @@ function App() {
       (item, index) => item.City === "Edmonton"
     );
     setCityHousePriceData(cityFilterData);
-    prepareAllCitiesAvrgPrice()
+    prepareAllCitiesAvrgPrice(data)
     setCityStatistic(calculateCityStatistics(data, 'Edmonton'))
-    prepareCityStatistic('Edmonton')
+    prepareCityStatistic('Edmonton', cityFilterData)
   }
 
-  const prepareCityStatistic = (selectedCity) => {
-    if (citiesInfo && selectedCity) {
-      const selectedCityData = citiesInfo.filter(location => location.City === selectedCity);
+  const prepareCityStatistic = (selectedCity, cityFilterData) => {
+    if (cityFilterData && selectedCity) {
+      const selectedCityData = cityFilterData.filter(location => location.City === selectedCity);
 
       const locations = selectedCityData.map(location => location.Address);
       const housePrices = selectedCityData.map(location => location.Price);
@@ -101,9 +101,9 @@ function App() {
     }
   }
 
-  const prepareAllCitiesAvrgPrice = () => {
+  const prepareAllCitiesAvrgPrice = (data) => {
     if (cityData && cityData.length > 0) {
-      const averagePrices = getAllCityAvrgPriceDatasets(citiesInfo)
+      const averagePrices = getAllCityAvrgPriceDatasets(data)
       setAveragePrices(averagePrices)
     }
   }
@@ -116,7 +116,7 @@ function App() {
       );
       setCityHousePriceData(cityFilterData);
       setCityStatistic(calculateCityStatistics(citiesInfo, item.value))
-      prepareCityStatistic(item.value)
+      prepareCityStatistic(item.value, cityFilterData)
     }
   }
 
@@ -132,7 +132,7 @@ function App() {
     if (findCity) {
       setSelectedCity(findCity)
       setCityStatistic(calculateCityStatistics(citiesInfo, findCity.value))
-      prepareCityStatistic(findCity.value)
+      prepareCityStatistic(findCity.value, cityFilterData)
     }
 
 
@@ -152,7 +152,7 @@ function App() {
       if (findCity) {
         setSelectedCity(findCity)
         setCityStatistic(calculateCityStatistics(citiesInfo, findCity.value))
-        prepareCityStatistic(findCity.value)
+        prepareCityStatistic(findCity.value, cityFilterData)
       }
     }
   }
